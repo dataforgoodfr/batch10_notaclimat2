@@ -114,7 +114,7 @@ def generate_topleft_item(selected_company):
             html.Tbody([
                 html.Tr([
                     html.Td(html.Img(src=pic_topleft), rowSpan=2, className="me-1"),
-                    html.Td('Réduction de ses propres émissions', className="fw-bold"),
+                    html.Td('Evolution de ses propres émissions (scopes 1 & 2)', className="fw-bold"),
                 ]),
                 html.Tr([
                     daq.Indicator(color=color_topleft, value=True),
@@ -142,7 +142,7 @@ def generate_topright_item(selected_company):
             html.Tbody([
                 html.Tr([
                     html.Td(html.Img(src=pic_topright), rowSpan=2, className="me-1"),
-                    html.Td('Réduction de son empreinte carbone', className="fw-bold"),
+                    html.Td('Evolution de son empreinte carbone complète (scopes 1, 2 & 3)', className="fw-bold"),
                 ]),
                 html.Tr([
                     daq.Indicator(color=color_topright, value=True),
@@ -185,7 +185,7 @@ def get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year)
         return "Réduction des émissions de GES entre " + initial_year + " et " + final_year
 
 def generate_bottomleft_item(selected_company):
-    scenarios = [selected_company, '2°C scenario', '1.8°C scenario', '1.5°C scenario']
+    scenarios = ['Réduction observée', 'Reco 2°C', 'Reco 1.8°C', 'Reco 1.5°C']
     values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_left(selected_company)
 
     fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors)])
@@ -248,7 +248,7 @@ def get_bottomright_title(accomplishment_initial_year, accomplishment_final_year
         return "Réduction de l'empreinte carbone entre " + initial_year + " et " + final_year
 
 def generate_bottomright_item(selected_company):
-    scenarios = [selected_company, '2°C scenario', '1.8°C scenario', '1.5°C scenario']
+    scenarios = ['Réduction observée', 'Reco 2°C', 'Reco 1.8°C', 'Reco 1.5°C']
     values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_right(selected_company)
 
     fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors)])
