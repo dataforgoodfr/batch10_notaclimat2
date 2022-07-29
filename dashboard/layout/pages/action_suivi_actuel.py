@@ -118,7 +118,7 @@ def generate_topleft_item(selected_company):
                 ]),
                 html.Tr([
                     daq.Indicator(color=color_topleft, value=True),
-                    html.Td('\u279c ' + value_topleft, className="px-2"),
+                    html.Td('Compatible : \u279c ' + value_topleft, className="px-2"),
                 ],
                         className="align-baseline")
             ])
@@ -146,7 +146,7 @@ def generate_topright_item(selected_company):
                 ]),
                 html.Tr([
                     daq.Indicator(color=color_topright, value=True),
-                    html.Td('\u279c ' + value_topright, className="px-2, text-center"),
+                    html.Td('Compatible : \u279c ' + value_topright, className="px-2, text-center"),
                 ],
                         className="align-baseline")
             ])
