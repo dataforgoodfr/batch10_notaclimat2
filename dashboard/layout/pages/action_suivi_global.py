@@ -59,7 +59,7 @@ def action_suivi_global(selected_company):
                                         className="align-baseline")
                             ])
                         ],
-                        className="align-middle table table-borderless text-center mb-0")
+                        className="align-middle table table-borderless text-left mb-0")
                 ])
             ])
         ],
