@@ -45,8 +45,9 @@ def wrangle_data(raw_dataframes: RawDataFrames) -> DataFrame:
     for (k, group) in enumerate(list_groups):
         ini_date = df_companies_data.loc[k, "C1 initial date"]
         fin_date = df_companies_data.loc[k, "C1 final date"]
+        c1_reduction: str = df_companies_data.loc[k, "C1 reduction"]
 
-        if ini_date != "n.a." and fin_date != "n.a.":
+        if ini_date != "" and fin_date != "" and c1_reduction != "n.a.":
             diff_year = int(fin_date) - int(ini_date)
 
             if df_companies_data.loc[k, "C1 reduction"] != "n.a.":
@@ -116,8 +117,9 @@ def wrangle_data(raw_dataframes: RawDataFrames) -> DataFrame:
     for (k, group) in enumerate(list_groups):
         ini_date = df_companies_data.loc[k, "C2 initial date"]
         fin_date = df_companies_data.loc[k, "C2 final date"]
+        c2_reduction: str = df_companies_data.loc[k, "C2 reduction"]
 
-        if ini_date != "n.a." and fin_date != "n.a.":
+        if ini_date != "" and fin_date != "" and c2_reduction != "n.a.":
             diff_year = int(fin_date) - int(ini_date)
 
             if df_companies_data.loc[k, "C2 reduction"] != "n.a.":
@@ -135,9 +137,10 @@ def wrangle_data(raw_dataframes: RawDataFrames) -> DataFrame:
             c2_perc_scenarios.append([100.0 + dim_perc_2, 100.0 + dim_perc_18, 100.0 + dim_perc_15])
 
             # compute direct level of the cursor
-            reduc_per_year = float(df_companies_data.loc[k, "C2 reduction"].replace(',', '.').replace('%',
-                                                                                                      '')) / diff_year  # assume that values are given in percentages
-            reduc_per_year = reduc_per_year / 100.0  # gets back to float value for proper comparison with max_inter and min_inter
+            reduc_per_year = float(c2_reduction.replace(',', '.').replace('%', '')) / diff_year
+            # assume that values are given in percentages
+            reduc_per_year = reduc_per_year / 100.0
+            # gets back to float value for proper comparison with max_inter and min_inter
 
             min_inter = float(
                 df_pos_cursors.loc[df_companies_data.loc[k, "C2 unit"], df_companies_data.loc[k, "C2 complete score"]][
@@ -187,8 +190,9 @@ def wrangle_data(raw_dataframes: RawDataFrames) -> DataFrame:
 
         ini_date = df_companies_data.loc[k, "E1 initial date"]
         fin_date = df_companies_data.loc[k, "E1 final date"]
+        e1_reduction = df_companies_data.loc[k, "E1 reduction"]
 
-        if ini_date != "n.a." and fin_date != "n.a.":
+        if ini_date != "" and fin_date != "" and e1_reduction != "n.a.":
             diff_year = int(fin_date) - int(ini_date)
             if df_companies_data.loc[k, "E1 reduction"] != "n.a.":
                 e1_final_value.append(
@@ -244,8 +248,9 @@ def wrangle_data(raw_dataframes: RawDataFrames) -> DataFrame:
 
         ini_date = df_companies_data.loc[k, "E2 initial date"]
         fin_date = df_companies_data.loc[k, "E2 final date"]
+        e2_reduction = df_companies_data.loc[k, "E2 reduction"]
 
-        if ini_date != "n.a." and fin_date != "n.a.":
+        if ini_date != "" and fin_date != "" and e2_reduction != "n.a.":
             diff_year = int(fin_date) - int(ini_date)
             if df_companies_data.loc[k, "E2 reduction"] != "n.a.":
                 e2_final_value.append(
