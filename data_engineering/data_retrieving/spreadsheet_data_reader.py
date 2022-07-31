@@ -20,11 +20,9 @@ def read_spreadsheet_into_pandas(service: object,
     return pd.DataFrame(values[1:], columns=values[0])
 
 
-def read_raw_data(service: object, spreadsheet_id: str, list_groups_wanted: list) -> RawDataFrames:
+def read_raw_data(service: object, spreadsheet_id: str) -> RawDataFrames:
     df_companies_data = read_spreadsheet_into_pandas(service=service, spreadsheet_id=spreadsheet_id,
                                                      spreadsheet_range='Companies data')
-    df_companies_data_final = df_companies_data.copy(deep=True)
-    df_companies_data_final = df_companies_data_final[df_companies_data_final["Group"].isin(list_groups_wanted)]
 
     df_companies_competitors = read_spreadsheet_into_pandas(service=service, spreadsheet_id=spreadsheet_id,
                                                             spreadsheet_range='Companies competitors')
@@ -44,7 +42,7 @@ def read_raw_data(service: object, spreadsheet_id: str, list_groups_wanted: list
                                                      spreadsheet_range='Table Marques par catégorie')
     logger.info("google spreadsheet values retrieved successfully !")
 
-    return RawDataFrames(df_companies_data=df_companies_data_final,
+    return RawDataFrames(df_companies_data=df_companies_data,
                          df_companies_competitors=df_companies_competitors,
                          df_global_score=df_global_score,
                          df_emissions_scope=df_emissions_scope,

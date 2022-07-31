@@ -4,10 +4,10 @@ import pandas as pd
 from pandas import DataFrame
 
 
-def wrangle_data(raw_dataframes: RawDataFrames, list_groups: list) -> DataFrame:
+def wrangle_data(raw_dataframes: RawDataFrames) -> DataFrame:
     df_coeff_director = raw_dataframes.df_coeff_director.drop(columns=["degre final"])
     df_coeff_director = df_coeff_director.set_index(["Value type", "Courbes"])
-
+    list_groups = list(raw_dataframes.df_companies_data["Group"].unique())
     df_pos_cursors = raw_dataframes.df_pos_cursors.copy(deep=True).drop(
         columns=["Catégorie du secteur", "Intervalle", "Commentaire", "level"]).rename(
         columns={"Value type - Grandeur utilisée (évolution annuelle CO2)": "unit",
@@ -49,30 +49,33 @@ def wrangle_data(raw_dataframes: RawDataFrames, list_groups: list) -> DataFrame:
         if ini_date != "n.a." and fin_date != "n.a.":
             diff_year = int(fin_date) - int(ini_date)
 
-
-            
             if df_companies_data.loc[k, "C1 reduction"] != "n.a.":
-                c1_final_value.append(100.0 + float(df_companies_data.loc[k, "C1 reduction"].replace(',', '.').replace('%','')))# get rid of percentage if present
-           
+                c1_final_value.append(100.0 + float(
+                    df_companies_data.loc[k, "C1 reduction"].replace(',', '.').replace('%',
+                                                                                       '')))  # get rid of percentage if present
 
             # percentage per scenarios
-            dim_perc_2 = float(100.0 * diff_year * float(df_coeff_director.loc[df_companies_data.loc[k, "C1 unit"], '2°C'][0].replace(',', '.')))
-            dim_perc_18 = float(100.0 * diff_year * float(df_coeff_director.loc[df_companies_data.loc[k, "C1 unit"], '1,8°C'][0].replace(',', '.')))
-            dim_perc_15 = float(100.0 * diff_year * float(df_coeff_director.loc[df_companies_data.loc[k, "C1 unit"], '1,5°C'][0].replace(',', '.')))
+            dim_perc_2 = float(100.0 * diff_year * float(
+                df_coeff_director.loc[df_companies_data.loc[k, "C1 unit"], '2°C'][0].replace(',', '.')))
+            dim_perc_18 = float(100.0 * diff_year * float(
+                df_coeff_director.loc[df_companies_data.loc[k, "C1 unit"], '1,8°C'][0].replace(',', '.')))
+            dim_perc_15 = float(100.0 * diff_year * float(
+                df_coeff_director.loc[df_companies_data.loc[k, "C1 unit"], '1,5°C'][0].replace(',', '.')))
             c1_perc_scenarios.append([100.0 + dim_perc_2, 100.0 + dim_perc_18, 100.0 + dim_perc_15])
 
-
             # compute direct level of the cursor
-            reduc_per_year = float(df_companies_data.loc[k, "C1 reduction"].replace(',', '.').replace('%','')) / diff_year  # assume that values are given in percentages
-            reduc_per_year = reduc_per_year/100.0 # gets back to float value for proper comparison with max_inter and min_inter
+            reduc_per_year = float(df_companies_data.loc[k, "C1 reduction"].replace(',', '.').replace('%',
+                                                                                                      '')) / diff_year  # assume that values are given in percentages
+            reduc_per_year = reduc_per_year / 100.0  # gets back to float value for proper comparison with max_inter and min_inter
 
             min_inter = float(
                 df_pos_cursors.loc[df_companies_data.loc[k, "C1 unit"], df_companies_data.loc[k, "C1 direct score"]][
                     "min"].replace(',', '.'))
             max_inter = float(
-                df_pos_cursors.loc[df_companies_data.loc[k, "C1 unit"].replace(',', '.'), df_companies_data.loc[k, "C1 direct score"]][
+                df_pos_cursors.loc[
+                    df_companies_data.loc[k, "C1 unit"].replace(',', '.'), df_companies_data.loc[k, "C1 direct score"]][
                     "max"].replace(',', '.'))
-            c1_reduc_per_year.append(100.0 * reduc_per_year) # converts back to percentage
+            c1_reduc_per_year.append(100.0 * reduc_per_year)  # converts back to percentage
 
             # Just to check some 'weird cases'
             if reduc_per_year < min_inter or reduc_per_year > max_inter:
@@ -118,17 +121,23 @@ def wrangle_data(raw_dataframes: RawDataFrames, list_groups: list) -> DataFrame:
             diff_year = int(fin_date) - int(ini_date)
 
             if df_companies_data.loc[k, "C2 reduction"] != "n.a.":
-                c2_final_value.append(100.0 + float(df_companies_data.loc[k, "C2 reduction"].replace(',', '.').replace('%','')))# get rid of percentage if present
+                c2_final_value.append(100.0 + float(
+                    df_companies_data.loc[k, "C2 reduction"].replace(',', '.').replace('%',
+                                                                                       '')))  # get rid of percentage if present
 
             # percentage per scenarios
-            dim_perc_2 = float(100.0 * diff_year * float(df_coeff_director.loc[df_companies_data.loc[k, "C2 unit"], '2°C'][0].replace(',', '.')))
-            dim_perc_18 = float(100.0 * diff_year * float(df_coeff_director.loc[df_companies_data.loc[k, "C2 unit"], '1,8°C'][0].replace(',', '.')))
-            dim_perc_15 = float(100.0 * diff_year * float(df_coeff_director.loc[df_companies_data.loc[k, "C2 unit"], '1,5°C'][0].replace(',', '.')))
+            dim_perc_2 = float(100.0 * diff_year * float(
+                df_coeff_director.loc[df_companies_data.loc[k, "C2 unit"], '2°C'][0].replace(',', '.')))
+            dim_perc_18 = float(100.0 * diff_year * float(
+                df_coeff_director.loc[df_companies_data.loc[k, "C2 unit"], '1,8°C'][0].replace(',', '.')))
+            dim_perc_15 = float(100.0 * diff_year * float(
+                df_coeff_director.loc[df_companies_data.loc[k, "C2 unit"], '1,5°C'][0].replace(',', '.')))
             c2_perc_scenarios.append([100.0 + dim_perc_2, 100.0 + dim_perc_18, 100.0 + dim_perc_15])
 
             # compute direct level of the cursor
-            reduc_per_year = float(df_companies_data.loc[k, "C2 reduction"].replace(',', '.').replace('%','')) / diff_year # assume that values are given in percentages
-            reduc_per_year = reduc_per_year/100.0 # gets back to float value for proper comparison with max_inter and min_inter
+            reduc_per_year = float(df_companies_data.loc[k, "C2 reduction"].replace(',', '.').replace('%',
+                                                                                                      '')) / diff_year  # assume that values are given in percentages
+            reduc_per_year = reduc_per_year / 100.0  # gets back to float value for proper comparison with max_inter and min_inter
 
             min_inter = float(
                 df_pos_cursors.loc[df_companies_data.loc[k, "C2 unit"], df_companies_data.loc[k, "C2 complete score"]][
@@ -136,7 +145,7 @@ def wrangle_data(raw_dataframes: RawDataFrames, list_groups: list) -> DataFrame:
             max_inter = float(
                 df_pos_cursors.loc[df_companies_data.loc[k, "C2 unit"], df_companies_data.loc[k, "C2 complete score"]][
                     "max"].replace(',', '.'))
-            c2_reduc_per_year.append(100.0 * reduc_per_year) # converts back to percentage
+            c2_reduc_per_year.append(100.0 * reduc_per_year)  # converts back to percentage
 
             # Just to check some 'weird cases'
             if reduc_per_year < min_inter or reduc_per_year > max_inter:
@@ -182,18 +191,20 @@ def wrangle_data(raw_dataframes: RawDataFrames, list_groups: list) -> DataFrame:
         if ini_date != "n.a." and fin_date != "n.a.":
             diff_year = int(fin_date) - int(ini_date)
             if df_companies_data.loc[k, "E1 reduction"] != "n.a.":
-                e1_final_value.append(100.0 - float(df_companies_data.loc[k, "E1 reduction"].replace(',', '.').replace('%','')))
+                e1_final_value.append(
+                    100.0 - float(df_companies_data.loc[k, "E1 reduction"].replace(',', '.').replace('%', '')))
 
             # compute direct level of the cursor
-            reduc_per_year = -float(df_companies_data.loc[k, "E1 reduction"].replace(',', '.').replace('%','')) / diff_year
-            reduc_per_year = reduc_per_year/100.0
+            reduc_per_year = -float(
+                df_companies_data.loc[k, "E1 reduction"].replace(',', '.').replace('%', '')) / diff_year
+            reduc_per_year = reduc_per_year / 100.0
             min_inter = float(
                 df_pos_cursors.loc[df_companies_data.loc[k, "E1 unit"],
                                    df_companies_data.loc[k, "E1 score commitment direct"]]["min"].replace(',', '.'))
             max_inter = float(
                 df_pos_cursors.loc[df_companies_data.loc[k, "E1 unit"],
                                    df_companies_data.loc[k, "E1 score commitment direct"]]["max"].replace(',', '.'))
-            e1_reduc_per_year.append(100.0 * reduc_per_year) # converts back to percentage
+            e1_reduc_per_year.append(100.0 * reduc_per_year)  # converts back to percentage
 
             # Just to check some 'weird cases'
             if reduc_per_year < min_inter or reduc_per_year > max_inter:
@@ -237,11 +248,13 @@ def wrangle_data(raw_dataframes: RawDataFrames, list_groups: list) -> DataFrame:
         if ini_date != "n.a." and fin_date != "n.a.":
             diff_year = int(fin_date) - int(ini_date)
             if df_companies_data.loc[k, "E2 reduction"] != "n.a.":
-                e2_final_value.append(100.0 - float(df_companies_data.loc[k, "E2 reduction"].replace(',', '.').replace('%','')))
+                e2_final_value.append(
+                    100.0 - float(df_companies_data.loc[k, "E2 reduction"].replace(',', '.').replace('%', '')))
 
             # compute direct level of the cursor
-            reduc_per_year = -float(df_companies_data.loc[k, "E2 reduction"].replace(',', '.').replace('%','')) / diff_year
-            reduc_per_year = reduc_per_year/100.0
+            reduc_per_year = -float(
+                df_companies_data.loc[k, "E2 reduction"].replace(',', '.').replace('%', '')) / diff_year
+            reduc_per_year = reduc_per_year / 100.0
             min_inter = float(
                 df_pos_cursors.loc[df_companies_data.loc[k, "E2 unit"],
                                    df_companies_data.loc[k, "E2 score commitment"]]["min"].replace(',', '.'))

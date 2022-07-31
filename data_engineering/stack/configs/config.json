@@ -1,6 +1,6 @@
 {
   "paths": {
-    "gcp_key":"../keys/analytics-service-account-2-40.json"
+    "gcp_key":"data_engineering/stack/keys/nota-climat-app-7f0627e7cd7d.json"
   },
   "spreadsheet": {
     "raw_data_spreadsheet_id": "1SS6alKNhtkpxtNVSIwkxXHuPT0n6jmNKLtclm5ZB2rU",
@@ -8,6 +8,6 @@
     "processed_data_spreadsheet_range": "Table Dash - Vue 1 entreprise"
   },
   "data_processing": {
-    "list_groups_wanted": ["Danone","L'Oréal","Ferrero"]
+    "list_groups_wanted": ["Danone","Ferrero"]
   }
 }

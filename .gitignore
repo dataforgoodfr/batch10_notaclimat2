@@ -3,3 +3,5 @@ venv
 .DS_Store
 .env
 *~
+.idea
+/data_engineering/stack/keys/nota-climat-app-7f0627e7cd7d.json
