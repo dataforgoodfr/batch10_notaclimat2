@@ -281,7 +281,7 @@ def generate_bottomright_item(selected_company):
 
 def action_suivi_actuel(selected_company):
     return dbc.Container([
-        html.Div("Action actuelle - Suivi des engagements", className="h5"),
+        html.Div("Réductions observées et compatibilités climatiques actuelles", className="h5"),
         html.Div(
             dbc.Row([
                 dbc.Col(generate_topleft_item(selected_company), className='d-inline p-2', style={'width': '49%'}),
