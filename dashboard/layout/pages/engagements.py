@@ -5,7 +5,7 @@ from utils import card_style, dataviz_df
 
 def engagements(selected_company):
     return html.Div(children=[
-        html.Div('Ses engagements', className="h5"),
+        html.Div('Engagements de réduction de CO2', className="h5"),
         html.Div(dataviz_df[dataviz_df['company_name'] == selected_company]['direct_commitments_sentence'],
                  className="fst-italic"),
         html.Div([
