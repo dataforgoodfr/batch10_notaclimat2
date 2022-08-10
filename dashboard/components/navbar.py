@@ -85,7 +85,7 @@ def navbar_component(currentTab, *current_values):
                 dbc.Row(
                     [
                         #Navlink accueil
-                        dbc.NavItem(dbc.NavLink("Vue entreprise",
+                        dbc.NavItem(dbc.NavLink("Vue détaillée (1 entreprise)",
                                                 href=getHref(Pages.COMPANY, *current_values),
                                                 class_name="h5 text-white my-1"),
                                     class_name=getNavitemClass(currentTab, Pages.COMPANY)),
