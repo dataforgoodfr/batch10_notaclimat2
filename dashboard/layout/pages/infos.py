@@ -29,8 +29,8 @@ def infos(selected_company):
                              className="text-muted text-nowrap"),
                     html.Div([
                         #'Revenue: ' + dataviz_df[dataviz_df['company_name'] == selected_company]['revenue'].values[0].round( #English version
-                        'C.A : ' + dataviz_df[dataviz_df['company_name'] == selected_company]['revenue'].values[0].round( #French version
-                            decimals=1).astype(str) + ' B (' +
+                        'Chiffre d\'affaires : ' + dataviz_df[dataviz_df['company_name'] == selected_company]['revenue'].values[0].round( #French version
+                            decimals=1).astype(str) + ' Mrd € (' +
                         dataviz_df[dataviz_df['company_name'] == selected_company]['revenue_year'].values[0].astype(str) + ')'
                     ],
                              className="text-muted text-nowrap")
