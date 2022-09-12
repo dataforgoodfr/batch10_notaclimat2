@@ -53,7 +53,7 @@ def details(selected_company):
 
 
     return html.Div(children=[
-        html.Div("Détail des émissions", className="h5 p-3"),
+        html.Div("Détails de son empreinte carbone", className="h5 p-3"),
         html.Div([  
             dcc.Graph(id="details",
                       figure=fig,
