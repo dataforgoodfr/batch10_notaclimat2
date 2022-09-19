@@ -45,7 +45,7 @@ def build_bullet_gauge(engagement, accomplishment, color_accomplishment):
     fig = go.Figure()
 
     for i in range(0, 6):
-        trace = go.Bar(x=[0], y=[1], orientation='v', width=width, marker_color=color_bars[i], showlegend=False)
+        trace = go.Bar(x=[0], y=[1], orientation='v', width=width, marker_color=color_bars[i], showlegend=False, hoverinfo='skip')
         traces.insert(0, trace)
 
     fig.add_traces(traces)
