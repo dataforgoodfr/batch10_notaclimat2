@@ -62,7 +62,7 @@ def build_bullet_gauge(engagement, accomplishment, color_accomplishment):
                         name='Accomplishment',
                         xaxis='x1',
                         yaxis='y1',
-                        hovertemplate='Accomplissement',
+                        hovertemplate='Niveau de réduction observé<extra></extra>',
                         showlegend=False)
 
     # Building right cursor: engagement
