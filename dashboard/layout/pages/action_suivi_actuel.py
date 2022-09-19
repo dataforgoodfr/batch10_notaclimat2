@@ -193,7 +193,7 @@ def generate_bottomleft_item(selected_company):
     scenarios = ['Réduction observée', 'Reco 2°C', 'Reco 1.8°C', 'Reco 1.5°C']
     values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_left(selected_company)
 
-    fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors)])
+    fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors, hovertemplate="%{x} : %{y:.1%}<extra></extra>")])
     fig.update_traces(texttemplate='%{text:.1%}', textposition='outside')
     fig.update_layout(
         showlegend=False, 
@@ -273,7 +273,7 @@ def generate_bottomright_item(selected_company):
     scenarios = ['Réduction observée', 'Reco 2°C', 'Reco 1.8°C', 'Reco 1.5°C']
     values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_right(selected_company)
 
-    fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors)])
+    fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors, hovertemplate="%{x} : %{y:.1%}<extra></extra>")])
     fig.update_traces(texttemplate='%{text:.1%}', textposition='outside')
     fig.update_layout(
         showlegend=False, 
