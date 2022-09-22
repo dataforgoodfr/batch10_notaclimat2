@@ -54,4 +54,4 @@ def state_to_url(*state):
 # t1b7_df = pd.read_csv('data/t1b1-7.csv')
 # t2b2_df = pd.read_csv('data/t2b2.csv')
 
-dataviz_df = pd.read_excel('data/BDD_for_dataviz.xlsx', sheet_name='Sheet1')
+dataviz_df = pd.read_excel('data/BDD_for_dataviz_with_na.xlsx', sheet_name='Sheet1')
