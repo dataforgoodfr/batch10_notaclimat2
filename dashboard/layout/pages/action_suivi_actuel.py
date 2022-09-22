@@ -10,6 +10,7 @@ import plotly.graph_objects as go
 import plotly.figure_factory as ff
 
 import numpy as np
+import pandas as pd
 
 # Colorbars for bullet gauge
 color_bars = ['#820000', '#C00000', '#FF8939', '#FEC800', '#8CDF41', '#0DB800']
@@ -17,6 +18,7 @@ color_bars = ['#820000', '#C00000', '#FF8939', '#FEC800', '#8CDF41', '#0DB800']
 
 def get_filtered_data(df, selected_company):
     df_filtered = df[df['company_name'] == selected_company].reset_index(drop=True)
+    df_filtered = df_filtered.replace('n.a.', np.nan)
     return df_filtered
 
 
@@ -182,7 +184,7 @@ def bottom_left(selected_company):
     return values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year
 
 def get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year):
-    if accomplishment_initial_year == 0 and accomplishment_final_year == 0:
+    if pd.isna(accomplishment_initial_year) and pd.isna(accomplishment_final_year):
         return "Réduction des émissions de GES"
     else:
         initial_year = str(accomplishment_initial_year)
@@ -262,7 +264,7 @@ def bottom_right(selected_company):
     return values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year
 
 def get_bottomright_title(accomplishment_initial_year, accomplishment_final_year):
-    if accomplishment_initial_year == 0 and accomplishment_final_year == 0:
+    if pd.isna(accomplishment_initial_year) and pd.isna(accomplishment_final_year):
         return "Réduction de l'empreinte carbone"
     else:
         initial_year = str(accomplishment_initial_year)
