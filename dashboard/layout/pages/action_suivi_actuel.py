@@ -191,27 +191,34 @@ def get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year)
         final_year = str(accomplishment_final_year)
         return "Réduction des émissions de GES entre " + initial_year + " et " + final_year
 
+def generate_bottomleft_left_column(scenarios, values, colors, accomplishment):
+    if accomplishment == 1:
+        return html.Div(['Pas de mesure/reporting.', html.Br(), 'Trajectoire critique >4°C.'])
+    elif accomplishment == 99:
+        return html.Div('Mesure seulement récente.<br>Trajectoire business-as-usual : vers +4°C.')
+    else:
+        fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors, hovertemplate="%{x} : %{y:.1%}<extra></extra>")])
+        fig.update_traces(texttemplate='%{text:.1%}', textposition='outside')
+        fig.update_layout(
+            showlegend=False, 
+            paper_bgcolor='rgba(0,0,0,0)', 
+            plot_bgcolor='rgba(0,0,0,0)',
+            margin=dict(l=20, r=20, t=50, b=0)
+        )
+        #fig.update_yaxes(title=get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year), tickformat=".0%")
+        fig.update_yaxes(tickformat=".0%", range=[-0.6, 0.6], tick0=-0.5, dtick=0.25)
+        fig.update_xaxes(tickangle = 90, automargin=True)
+
+        return dcc.Graph(figure=fig, config={'displayModeBar': False})
+
 def generate_bottomleft_item(selected_company):
     scenarios = ['Réduction observée', 'Reco 2°C', 'Reco 1.8°C', 'Reco 1.5°C']
     values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_left(selected_company)
 
-    fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors, hovertemplate="%{x} : %{y:.1%}<extra></extra>")])
-    fig.update_traces(texttemplate='%{text:.1%}', textposition='outside')
-    fig.update_layout(
-        showlegend=False, 
-        paper_bgcolor='rgba(0,0,0,0)', 
-        plot_bgcolor='rgba(0,0,0,0)',
-        margin=dict(l=20, r=20, t=50, b=0)
-    )
-    #fig.update_yaxes(title=get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year), tickformat=".0%")
-    fig.update_yaxes(tickformat=".0%", range=[-0.6, 0.6], tick0=-0.5, dtick=0.25)
-    fig.update_xaxes(tickangle = 90, automargin=True)
-
     return html.Div([
         dbc.Row([
             html.Div(get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year), style={'text-align': 'center'}),
-            dbc.Col(dcc.Graph(figure=fig,
-                      config={'displayModeBar': False}),
+            dbc.Col(generate_bottomleft_left_column(scenarios, values, colors, accomplishment),
                     style={
                         'width': '60%',
                         'minWidth': '60%',
@@ -271,28 +278,35 @@ def get_bottomright_title(accomplishment_initial_year, accomplishment_final_year
         final_year = str(accomplishment_final_year)
         return "Réduction de l'empreinte carbone entre " + initial_year + " et " + final_year
 
+def generate_bottomright_left_column(scenarios, values, colors, accomplishment):
+    if accomplishment == 1:
+        return html.Div(['Pas de mesure/reporting.', html.Br(), 'Trajectoire critique >4°C.'])
+    elif accomplishment == 99:
+        return html.Div('Mesure seulement récente.<br>Trajectoire business-as-usual : vers +4°C.')
+    else:
+        fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors, hovertemplate="%{x} : %{y:.1%}<extra></extra>")])
+        fig.update_traces(texttemplate='%{text:.1%}', textposition='outside')
+        fig.update_layout(
+            showlegend=False, 
+            paper_bgcolor='rgba(0,0,0,0)', 
+            plot_bgcolor='rgba(0,0,0,0)',
+            margin=dict(l=20, r=20, t=50, b=0)
+        )
+        #fig.update_yaxes(title=get_bottomright_title(accomplishment_initial_year, accomplishment_final_year),
+        #    tickformat=".0%")
+        fig.update_yaxes(tickformat=".0%", range=[-0.6, 0.6], tick0=-0.5, dtick=0.25)
+        fig.update_xaxes(tickangle = 90, automargin=True)
+
+        return dcc.Graph(figure=fig, config={'displayModeBar': False})
+
 def generate_bottomright_item(selected_company):
     scenarios = ['Réduction observée', 'Reco 2°C', 'Reco 1.8°C', 'Reco 1.5°C']
     values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_right(selected_company)
 
-    fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors, hovertemplate="%{x} : %{y:.1%}<extra></extra>")])
-    fig.update_traces(texttemplate='%{text:.1%}', textposition='outside')
-    fig.update_layout(
-        showlegend=False, 
-        paper_bgcolor='rgba(0,0,0,0)', 
-        plot_bgcolor='rgba(0,0,0,0)',
-        margin=dict(l=20, r=20, t=50, b=0)
-    )
-    #fig.update_yaxes(title=get_bottomright_title(accomplishment_initial_year, accomplishment_final_year),
-    #    tickformat=".0%")
-    fig.update_yaxes(tickformat=".0%", range=[-0.6, 0.6], tick0=-0.5, dtick=0.25)
-    fig.update_xaxes(tickangle = 90, automargin=True)
-
     return html.Div([
         dbc.Row([
             html.Div(get_bottomright_title(accomplishment_initial_year, accomplishment_final_year), style={'text-align': 'center'}),
-            dbc.Col(dcc.Graph(figure=fig,
-                      config={'displayModeBar': False}),
+            dbc.Col(generate_bottomright_left_column(scenarios, values, colors, accomplishment),
                     style={
                         'width': '60%',
                         'min-width': '60%',
