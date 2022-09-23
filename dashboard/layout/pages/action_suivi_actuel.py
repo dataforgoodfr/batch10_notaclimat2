@@ -193,9 +193,27 @@ def get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year)
 
 def generate_bottomleft_left_column(scenarios, values, colors, accomplishment):
     if accomplishment == 1:
-        return html.Div(['Pas de mesure/reporting.', html.Br(), 'Trajectoire critique >4°C.'])
+        return dbc.Col(
+                    html.Div(['Pas de mesure/reporting.', html.Br(), 'Trajectoire critique >4°C.']),
+                    style={
+                        'text-align': 'center',
+                        'width': '60%',
+                        'minWidth': '60%',
+                        'maxWidth': '60%',
+                        #'height': '100%'
+                    }
+                )
     elif accomplishment == 99:
-        return html.Div('Mesure seulement récente.<br>Trajectoire business-as-usual : vers +4°C.')
+        return dbc.Col(
+                    html.Div('Mesure seulement récente.<br>Trajectoire business-as-usual : vers +4°C.'),
+                    style={
+                        'text-align': 'center',
+                        'width': '60%',
+                        'minWidth': '60%',
+                        'maxWidth': '60%',
+                        #'height': '100%'
+                    }
+                )
     else:
         fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors, hovertemplate="%{x} : %{y:.1%}<extra></extra>")])
         fig.update_traces(texttemplate='%{text:.1%}', textposition='outside')
@@ -209,7 +227,15 @@ def generate_bottomleft_left_column(scenarios, values, colors, accomplishment):
         fig.update_yaxes(tickformat=".0%", range=[-0.6, 0.6], tick0=-0.5, dtick=0.25)
         fig.update_xaxes(tickangle = 90, automargin=True)
 
-        return dcc.Graph(figure=fig, config={'displayModeBar': False})
+        return dbc.Col(
+                    dcc.Graph(figure=fig, config={'displayModeBar': False}),
+                    style={
+                        'width': '60%',
+                        'minWidth': '60%',
+                        'maxWidth': '60%',
+                        #'height': '100%'
+                    }
+                )
 
 def generate_bottomleft_item(selected_company):
     scenarios = ['Réduction observée', 'Reco 2°C', 'Reco 1.8°C', 'Reco 1.5°C']
@@ -218,13 +244,7 @@ def generate_bottomleft_item(selected_company):
     return html.Div([
         dbc.Row([
             html.Div(get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year), style={'text-align': 'center'}),
-            dbc.Col(generate_bottomleft_left_column(scenarios, values, colors, accomplishment),
-                    style={
-                        'width': '60%',
-                        'minWidth': '60%',
-                        'maxWidth': '60%',
-                        #'height': '100%'
-                    }),
+            generate_bottomleft_left_column(scenarios, values, colors, accomplishment),
             dbc.Col([
                     html.Div(
                         'Compatibilité climatique actuelle vs. ses engagements annoncés', 
@@ -280,9 +300,29 @@ def get_bottomright_title(accomplishment_initial_year, accomplishment_final_year
 
 def generate_bottomright_left_column(scenarios, values, colors, accomplishment):
     if accomplishment == 1:
-        return html.Div(['Pas de mesure/reporting.', html.Br(), 'Trajectoire critique >4°C.'])
+        return dbc.Col(
+                    html.Div(
+                        ['Pas de mesure/reporting.', html.Br(), 'Trajectoire critique >4°C.']
+                    ),
+                    style={
+                        'text-align': 'center',
+                        'width': '60%',
+                        'min-width': '60%',
+                        'max-width': '60%',
+                        #'height': '100%'
+                    }
+                )
     elif accomplishment == 99:
-        return html.Div('Mesure seulement récente.<br>Trajectoire business-as-usual : vers +4°C.')
+        return dbc.Col(
+                    html.Div('Mesure seulement récente.<br>Trajectoire business-as-usual : vers +4°C.'),
+                    style={
+                        'text-align': 'center',
+                        'width': '60%',
+                        'min-width': '60%',
+                        'max-width': '60%',
+                        #'height': '100%'
+                    }
+                )
     else:
         fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors, hovertemplate="%{x} : %{y:.1%}<extra></extra>")])
         fig.update_traces(texttemplate='%{text:.1%}', textposition='outside')
@@ -297,7 +337,15 @@ def generate_bottomright_left_column(scenarios, values, colors, accomplishment):
         fig.update_yaxes(tickformat=".0%", range=[-0.6, 0.6], tick0=-0.5, dtick=0.25)
         fig.update_xaxes(tickangle = 90, automargin=True)
 
-        return dcc.Graph(figure=fig, config={'displayModeBar': False})
+        return dbc.Col(
+                    dcc.Graph(figure=fig, config={'displayModeBar': False}),
+                    style={
+                        'width': '60%',
+                        'min-width': '60%',
+                        'max-width': '60%',
+                        #'height': '100%'
+                    }
+                )
 
 def generate_bottomright_item(selected_company):
     scenarios = ['Réduction observée', 'Reco 2°C', 'Reco 1.8°C', 'Reco 1.5°C']
@@ -306,13 +354,7 @@ def generate_bottomright_item(selected_company):
     return html.Div([
         dbc.Row([
             html.Div(get_bottomright_title(accomplishment_initial_year, accomplishment_final_year), style={'text-align': 'center'}),
-            dbc.Col(generate_bottomright_left_column(scenarios, values, colors, accomplishment),
-                    style={
-                        'width': '60%',
-                        'min-width': '60%',
-                        'max-width': '60%',
-                        #'height': '100%'
-                    }),
+            generate_bottomright_left_column(scenarios, values, colors, accomplishment),
             dbc.Col([
                 html.Div(
                     'Compatibilité climatique actuelle vs. ses engagements annoncés', 
