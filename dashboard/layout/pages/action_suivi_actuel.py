@@ -122,7 +122,7 @@ def generate_topleft_item(selected_company):
         html.Table([
             html.Tbody([
                 html.Tr([
-                    html.Td(html.Img(src=pic_topleft), rowSpan=2, className="me-1"),
+                    html.Td(html.Img(src=pic_topleft), rowSpan=1, className="me-1"),
                     html.Td('Evolution de ses propres émissions (scopes 1 & 2)', className="fw-bold"),
                 ]),
                 html.Tr([
@@ -132,7 +132,7 @@ def generate_topleft_item(selected_company):
                         className="align-baseline")
             ])
         ],
-                   className="align-middle table table-borderless text-center mb-0")
+                   className="align-middle table table-borderless text-left mb-0")
     ])
 
 
@@ -150,12 +150,12 @@ def generate_topright_item(selected_company):
         html.Table([
             html.Tbody([
                 html.Tr([
-                    html.Td(html.Img(src=pic_topright), rowSpan=2, className="me-1"),
+                    html.Td(html.Img(src=pic_topright), rowSpan=1, className="me-1"),
                     html.Td('Evolution de son empreinte carbone complète (scopes 1, 2 & 3)', className="fw-bold"),
                 ]),
                 html.Tr([
                     daq.Indicator(color=color_topright, value=True),
-                    html.Td('Compatible : \u279c ' + value_topright, className="px-2, text-center"),
+                    html.Td('Compatible : \u279c ' + value_topright, className="px-2"),
                 ],
                         className="align-baseline")
             ])
