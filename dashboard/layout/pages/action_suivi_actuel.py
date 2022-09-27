@@ -47,7 +47,13 @@ def build_bullet_gauge(engagement, accomplishment, color_accomplishment):
     fig = go.Figure()
 
     for i in range(0, 6):
-        trace = go.Bar(x=[0], y=[1], orientation='v', width=width, marker_color=color_bars[i], showlegend=False, hoverinfo='skip')
+        trace = go.Bar(x=[0],
+                       y=[1],
+                       orientation='v',
+                       width=width,
+                       marker_color=color_bars[i],
+                       showlegend=False,
+                       hoverinfo='skip')
         traces.insert(0, trace)
 
     fig.add_traces(traces)
@@ -94,11 +100,7 @@ def build_bullet_gauge(engagement, accomplishment, color_accomplishment):
                      ticktext=['+1.5°', '', '+2°C', '', '+4°C', ''])
 
     # Deleting the background
-    fig.update_layout(
-        paper_bgcolor='rgba(0,0,0,0)', 
-        plot_bgcolor='rgba(0,0,0,0)',
-        margin=dict(l=20, r=50, t=2, b=50)
-    )
+    fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=20, r=50, t=2, b=50))
 
     # Adding cursors
     fig.add_traces([trace1, trace2])
@@ -183,6 +185,7 @@ def bottom_left(selected_company):
 
     return values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year
 
+
 def get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year):
     if pd.isna(accomplishment_initial_year) and pd.isna(accomplishment_final_year):
         return "Réduction des émissions de GES"
@@ -191,82 +194,88 @@ def get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year)
         final_year = str(accomplishment_final_year)
         return "Réduction des émissions de GES entre " + initial_year + " et " + final_year
 
+
 def generate_bottomleft_left_column(scenarios, values, colors, accomplishment):
     if accomplishment == 1:
-        return dbc.Col(
-                    html.Div(['Pas de mesure/reporting.', html.Br(), 'Trajectoire critique >4°C.']),
-                    style={
-                        'text-align': 'center',
-                        'width': '60%',
-                        'minWidth': '60%',
-                        'maxWidth': '60%',
-                        #'height': '100%'
-                    }
-                )
+        return dbc.Col(html.Div(['Pas de mesure/reporting.',
+                                 html.Br(), 'Trajectoire critique >4°C.']),
+                       className="d-flex align-items-center justify-content-center",
+                       style={
+                           'text-align': 'center',
+                           'width': '60%',
+                           'minWidth': '60%',
+                           'maxWidth': '60%',
+                           'height': 'inherit'
+                       })
     elif accomplishment == 99:
         return dbc.Col(
-                    html.Div('Mesure seulement récente.<br>Trajectoire business-as-usual : vers +4°C.'),
-                    style={
-                        'text-align': 'center',
-                        'width': '60%',
-                        'minWidth': '60%',
-                        'maxWidth': '60%',
-                        #'height': '100%'
-                    }
-                )
+            html.Div('Mesure seulement récente.<br>Trajectoire business-as-usual : vers +4°C.'),
+            style={
+                'text-align': 'center',
+                'width': '60%',
+                'minWidth': '60%',
+                'maxWidth': '60%',
+                #'height': '100%'
+            })
     else:
-        fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors, hovertemplate="%{x} : %{y:.1%}<extra></extra>")])
+        fig = go.Figure([
+            go.Bar(x=scenarios,
+                   y=values,
+                   text=values,
+                   marker_color=colors,
+                   hovertemplate="%{x} : %{y:.1%}<extra></extra>")
+        ])
         fig.update_traces(texttemplate='%{text:.1%}', textposition='outside')
-        fig.update_layout(
-            showlegend=False, 
-            paper_bgcolor='rgba(0,0,0,0)', 
-            plot_bgcolor='rgba(0,0,0,0)',
-            margin=dict(l=20, r=20, t=50, b=0)
-        )
+        fig.update_layout(showlegend=False,
+                          paper_bgcolor='rgba(0,0,0,0)',
+                          plot_bgcolor='rgba(0,0,0,0)',
+                          margin=dict(l=20, r=20, t=50, b=0))
         #fig.update_yaxes(title=get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year), tickformat=".0%")
         fig.update_yaxes(tickformat=".0%", range=[-0.6, 0.6], tick0=-0.5, dtick=0.25)
-        fig.update_xaxes(tickangle = 90, automargin=True)
+        fig.update_xaxes(tickangle=90, automargin=True)
 
         return dbc.Col(
-                    dcc.Graph(figure=fig, config={'displayModeBar': False}),
-                    style={
-                        'width': '60%',
-                        'minWidth': '60%',
-                        'maxWidth': '60%',
-                        #'height': '100%'
-                    }
-                )
+            dcc.Graph(figure=fig, config={'displayModeBar': False}),
+            style={
+                'width': '60%',
+                'minWidth': '60%',
+                'maxWidth': '60%',
+                #'height': '100%'
+            })
+
 
 def generate_bottomleft_item(selected_company):
     scenarios = ['Réduction observée', 'Reco 2°C', 'Reco 1.8°C', 'Reco 1.5°C']
-    values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_left(selected_company)
+    values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_left(
+        selected_company)
 
-    return html.Div([
-        dbc.Row([
-            html.Div(get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year), style={'text-align': 'center'}),
-            generate_bottomleft_left_column(scenarios, values, colors, accomplishment),
-            dbc.Col([
-                    html.Div(
-                        'Compatibilité climatique actuelle vs. ses engagements annoncés', 
-                        style={'text-align': 'center', 'font-size': '0.75em', 'margin': '10px'}
-                    ),
-                    dcc.Graph(
-                        figure=build_bullet_gauge(engagement, accomplishment, color_accomplishment),
-                        config={'displayModeBar': False}
-                    )
-                ], 
-                style={
-                    'width': '40%',
-                    'minWidth': '40%',
-                    'maxWidth': '40%',
-                    #'height': '100%'
-                },
-                className="p-0"
-            )
-        ])
-    ],
-                    className="d-flex flex-column border"
-                    )
+    return html.Div(
+        [
+            dbc.Row([
+                html.Div(get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year),
+                         style={'text-align': 'center'}),
+                generate_bottomleft_left_column(scenarios, values, colors, accomplishment),
+                dbc.Col(
+                    [
+                        html.Div('Compatibilité climatique actuelle vs. ses engagements annoncés',
+                                 style={
+                                     'text-align': 'center',
+                                     'font-size': '0.75em',
+                                     'margin': '10px'
+                                 }),
+                        dcc.Graph(figure=build_bullet_gauge(engagement, accomplishment, color_accomplishment),
+                                  config={'displayModeBar': False})
+                    ],
+                    style={
+                        'width': '40%',
+                        'minWidth': '40%',
+                        'maxWidth': '40%',
+                        #'height': '100%'
+                    },
+                    className="p-0")
+            ])
+        ],
+        className="d-flex flex-column border")
 
 
 def bottom_right(selected_company):
@@ -290,6 +299,7 @@ def bottom_right(selected_company):
 
     return values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year
 
+
 def get_bottomright_title(accomplishment_initial_year, accomplishment_final_year):
     if pd.isna(accomplishment_initial_year) and pd.isna(accomplishment_final_year):
         return "Réduction de l'empreinte carbone"
@@ -298,70 +308,79 @@ def get_bottomright_title(accomplishment_initial_year, accomplishment_final_year
         final_year = str(accomplishment_final_year)
         return "Réduction de l'empreinte carbone entre " + initial_year + " et " + final_year
 
+
 def generate_bottomright_left_column(scenarios, values, colors, accomplishment):
     if accomplishment == 1:
-        return dbc.Col(
-                    html.Div(
-                        ['Pas de mesure/reporting.', html.Br(), 'Trajectoire critique >4°C.']
-                    ),
-                    style={
-                        'text-align': 'center',
-                        'width': '60%',
-                        'min-width': '60%',
-                        'max-width': '60%',
-                        #'height': '100%'
-                    }
-                )
+        return dbc.Col(html.Div(['Pas de mesure/reporting.',
+                                 html.Br(), 'Trajectoire critique >4°C.']),
+                       className="d-flex align-items-center justify-content-center",
+                       style={
+                           'text-align': 'center',
+                           'width': '60%',
+                           'min-width': '60%',
+                           'max-width': '60%',
+                           'height': 'inherit'
+                       })
     elif accomplishment == 99:
         return dbc.Col(
-                    html.Div('Mesure seulement récente.<br>Trajectoire business-as-usual : vers +4°C.'),
-                    style={
-                        'text-align': 'center',
-                        'width': '60%',
-                        'min-width': '60%',
-                        'max-width': '60%',
-                        #'height': '100%'
-                    }
-                )
+            html.Div('Mesure seulement récente.<br>Trajectoire business-as-usual : vers +4°C.'),
+            style={
+                'text-align': 'center',
+                'width': '60%',
+                'min-width': '60%',
+                'max-width': '60%',
+                #'height': '100%'
+            })
     else:
-        fig = go.Figure([go.Bar(x=scenarios, y=values, text=values, marker_color=colors, hovertemplate="%{x} : %{y:.1%}<extra></extra>")])
+        fig = go.Figure([
+            go.Bar(x=scenarios,
+                   y=values,
+                   text=values,
+                   marker_color=colors,
+                   hovertemplate="%{x} : %{y:.1%}<extra></extra>")
+        ])
         fig.update_traces(texttemplate='%{text:.1%}', textposition='outside')
-        fig.update_layout(
-            showlegend=False, 
-            paper_bgcolor='rgba(0,0,0,0)', 
-            plot_bgcolor='rgba(0,0,0,0)',
-            margin=dict(l=20, r=20, t=50, b=0)
-        )
+        fig.update_layout(showlegend=False,
+                          paper_bgcolor='rgba(0,0,0,0)',
+                          plot_bgcolor='rgba(0,0,0,0)',
+                          margin=dict(l=20, r=20, t=50, b=0))
         #fig.update_yaxes(title=get_bottomright_title(accomplishment_initial_year, accomplishment_final_year),
         #    tickformat=".0%")
         fig.update_yaxes(tickformat=".0%", range=[-0.6, 0.6], tick0=-0.5, dtick=0.25)
-        fig.update_xaxes(tickangle = 90, automargin=True)
+        fig.update_xaxes(tickangle=90, automargin=True)
 
         return dbc.Col(
-                    dcc.Graph(figure=fig, config={'displayModeBar': False}),
-                    style={
-                        'width': '60%',
-                        'min-width': '60%',
-                        'max-width': '60%',
-                        #'height': '100%'
-                    }
-                )
+            dcc.Graph(figure=fig, config={'displayModeBar': False}),
+            style={
+                'width': '60%',
+                'min-width': '60%',
+                'max-width': '60%',
+                #'height': '100%'
+            })
+
 
 def generate_bottomright_item(selected_company):
     scenarios = ['Réduction observée', 'Reco 2°C', 'Reco 1.8°C', 'Reco 1.5°C']
-    values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_right(selected_company)
+    values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_right(
+        selected_company)
 
-    return html.Div([
-        dbc.Row([
-            html.Div(get_bottomright_title(accomplishment_initial_year, accomplishment_final_year), style={'text-align': 'center'}),
-            generate_bottomright_left_column(scenarios, values, colors, accomplishment),
-            dbc.Col([
-                html.Div(
-                    'Compatibilité climatique actuelle vs. ses engagements annoncés', 
-                    style={'text-align': 'center', 'font-size': '0.75em', 'margin': '10px'}
-                ),
-                dcc.Graph(figure=build_bullet_gauge(engagement, accomplishment, color_accomplishment),
-                                config={'displayModeBar': False})],
+    return html.Div(
+        [
+            dbc.Row([
+                html.Div(get_bottomright_title(accomplishment_initial_year, accomplishment_final_year),
+                         style={'text-align': 'center'}),
+                generate_bottomright_left_column(scenarios, values, colors, accomplishment),
+                dbc.Col(
+                    [
+                        html.Div('Compatibilité climatique actuelle vs. ses engagements annoncés',
+                                 style={
+                                     'text-align': 'center',
+                                     'font-size': '0.75em',
+                                     'margin': '10px'
+                                 }),
+                        dcc.Graph(figure=build_bullet_gauge(engagement, accomplishment, color_accomplishment),
+                                  config={'displayModeBar': False})
+                    ],
                     style={
                         'width': '40%',
                         'min-width': '40%',
@@ -369,9 +388,9 @@ def generate_bottomright_item(selected_company):
                         #'height': '100%'
                     },
                     className="p-0")
-        ]),
-    ],
-                    className="d-flex flex-column border")
+            ]),
+        ],
+        className="d-flex flex-column border")
 
 
 def action_suivi_actuel(selected_company):
@@ -392,5 +411,5 @@ def action_suivi_actuel(selected_company):
                 dbc.Col(generate_bottomright_item(selected_company), className='d-inline p-2', style={'width': '49%'}),
             ],
                     style={'verticalAlign': 'middle'}))
-    ]
-    ,                         className="d-flex flex-column")
+    ],
+                         className="d-flex flex-column")
