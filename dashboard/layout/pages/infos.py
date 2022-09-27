@@ -10,6 +10,7 @@ import ast
 
 def infos(selected_company):
     top_brands = ast.literal_eval(dataviz_df[dataviz_df['company_name'] == selected_company]['top_brands'].values[0])
+    top_brands = [brand for brand in top_brands if brand != 'NaN']
 
     return html.Div(
         children=[
