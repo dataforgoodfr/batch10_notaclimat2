@@ -37,7 +37,7 @@ def select_company_component(currentTab, state):
                 options=[{
                     'label': i,
                     'value': i
-                } for i in dataviz_df['company_name']],
+                } for i in get_companies_sorted_list(dataviz_df)],
                 #value='Andros'
                 multi=isCurrentTab(currentTab, Pages.COMPARE),
                 searchable=True,
@@ -48,6 +48,8 @@ def select_company_component(currentTab, state):
         ],
         className="bg-primary w-100 pb-2")
 
+def get_companies_sorted_list(df):
+    return dataviz_df['company_name'].sort_values()
 
 def getNavitemClass(currentTab, tabId):
     return "col" + (' bg-primary' if isCurrentTab(currentTab, tabId) else '')
