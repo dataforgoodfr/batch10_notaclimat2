@@ -22,8 +22,9 @@ def infos(selected_company):
                          className="col",
                          style={"maxWidth": "110px"}),
                 html.Div([
-                    html.Div(selected_company + " " +
-                             flag.flag(dataviz_df[dataviz_df['company_name'] == selected_company]['country_flag'].values[0]),
+                    html.Div(selected_company + " (" +
+                             flag.flag(dataviz_df[dataviz_df['company_name'] == selected_company]['country_flag'].values[0]) +
+                             ")",
                              className="h3"),
                     #html.Div('Sector: ' + dataviz_df[dataviz_df['company_name'] == selected_company]['sector'].values[0], #English version
                     html.Div('Secteur : ' + dataviz_df[dataviz_df['company_name'] == selected_company]['sector'].values[0], #French version
