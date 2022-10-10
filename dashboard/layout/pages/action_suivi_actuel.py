@@ -59,6 +59,10 @@ def build_bullet_gauge(engagement, accomplishment, color_accomplishment):
     fig.add_traces(traces)
     fig.update_layout(barmode='stack')
 
+    # Considering the recent accomplishment as a 3/4°C accomplishment
+    if accomplishment == 99:
+        accomplishment = 2 
+
     # Building left cursor: accomplishment
     trace1 = go.Scatter(x=[-0.1 - width],
                         y=[7 - accomplishment],
@@ -215,8 +219,8 @@ def generate_bottomleft_left_column(scenarios, values, colors, accomplishment):
             style={
                 'text-align': 'center',
                 'width': '60%',
-                'min-width': '60%',
-                'max-width': '60%',
+                'minWidth': '60%',
+                'maxWidth': '60%',
                 'height': 'inherit'
             })
     else:
