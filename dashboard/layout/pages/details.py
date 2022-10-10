@@ -36,6 +36,7 @@ def details(selected_company):
             'plot_bgcolor': 'rgba(255, 255, 255, 255)',
             'paper_bgcolor': 'rgba(255, 255, 255, 255)',
         },
+        legend=dict(yanchor="top", y=-0.05, xanchor="left", x=-0.25),
         legend_title="Catégories",
         uniformtext_minsize=10,
         uniformtext_mode='hide'
