@@ -28,19 +28,35 @@ def generate_html_table(df, max_rows, selected_company):
     rows = []
     for i in range(0, max_rows):
         image_filename = df.iloc[i]['global_score_logo_path']
-        rows.append(
-            html.Tr([
-                html.Td(df.iloc[i]['company_name'], className="fw-bold text-start"),
-                html.Td(html.Img(src=image_filename), className="text-start"),
-                html.Td('\u279c ' + df.iloc[i]['direct_score_short_label'],
-                        className="px-2",
-                        style={'color': df.iloc[i]['direct_score_hexa_color_code']}),
-                html.Td('\u279c ' + df.iloc[i]['complete_score_short_label'],
-                        className="px-2",
-                        style={'color': df.iloc[i]['complete_score_hexa_color_code']})
-            ],
-                    id=str(i),
-                    className="align-baseline"))
+        company_name = df.iloc[i]['company_name']
+        if company_name != selected_company:
+            rows.append(
+                html.Tr([
+                    html.Td(company_name, className="fw-bold text-start"),
+                    html.Td(html.Img(src=image_filename), className="text-start"),
+                    html.Td('\u279c ' + df.iloc[i]['direct_score_short_label'],
+                            className="px-2",
+                            style={'color': df.iloc[i]['direct_score_hexa_color_code']}),
+                    html.Td('\u279c ' + df.iloc[i]['complete_score_short_label'],
+                            className="px-2",
+                            style={'color': df.iloc[i]['complete_score_hexa_color_code']})
+                ],
+                        id=str(i),
+                        className="align-baseline"))
+        else:
+            rows.append(
+                html.Tr([
+                    html.Td(company_name, className="fw-bold text-start"),
+                    html.Td(html.Img(src=image_filename), className="text-start"),
+                    html.Td('\u279c ' + df.iloc[i]['direct_score_short_label'],
+                            className="px-2",
+                            style={'color': df.iloc[i]['direct_score_hexa_color_code']}),
+                    html.Td('\u279c ' + df.iloc[i]['complete_score_short_label'],
+                            className="px-2",
+                            style={'color': df.iloc[i]['complete_score_hexa_color_code']})
+                ],
+                        id=str(i),
+                        className="align-baseline table-secondary"))
 
     return html.Div(children=[
         html.Div("Comparaison sectorielle - " + selected_company, className="h4 mb-3"),
