@@ -20,9 +20,9 @@ def get_sector(df, selected_company):
 
 def get_filtered_data(df, selected_company):
     df_filtered = df[df['sector'] == get_sector(df, selected_company)].reset_index(drop=True)
-    df_filtered = df_filtered.sort_values(by='global_score', ascending=False)
+    df_filtered['direct_score'] = df_filtered['direct_score'].replace(99, 0)
+    df_filtered = df_filtered.sort_values(by=['global_score', 'direct_score'], ascending=False)
     return df_filtered
-
 
 def generate_html_table(df, max_rows, selected_company):
     rows = []
