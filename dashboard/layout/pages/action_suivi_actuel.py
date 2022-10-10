@@ -209,13 +209,15 @@ def generate_bottomleft_left_column(scenarios, values, colors, accomplishment):
                        })
     elif accomplishment == 99:
         return dbc.Col(
-            html.Div('Mesure seulement récente.<br>Trajectoire business-as-usual : vers +4°C.'),
+            html.Div(['Mesure seulement récente.',
+                     html.Br(),'Trajectoire business-as-usual : vers +4°C.']),
+            className="d-flex align-items-center justify-content-center",
             style={
                 'text-align': 'center',
                 'width': '60%',
-                'minWidth': '60%',
-                'maxWidth': '60%',
-                #'height': '100%'
+                'min-width': '60%',
+                'max-width': '60%',
+                'height': 'inherit'
             })
     else:
         fig = go.Figure([
@@ -323,13 +325,15 @@ def generate_bottomright_left_column(scenarios, values, colors, accomplishment):
                        })
     elif accomplishment == 99:
         return dbc.Col(
-            html.Div('Mesure seulement récente.<br>Trajectoire business-as-usual : vers +4°C.'),
+            html.Div(['Mesure seulement récente.',
+                     html.Br(),'Trajectoire business-as-usual : vers +4°C.']),
+            className="d-flex align-items-center justify-content-center",
             style={
                 'text-align': 'center',
                 'width': '60%',
                 'min-width': '60%',
                 'max-width': '60%',
-                #'height': '100%'
+                'height': 'inherit'
             })
     else:
         fig = go.Figure([
