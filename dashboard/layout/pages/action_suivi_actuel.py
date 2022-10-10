@@ -223,9 +223,9 @@ def generate_bottomleft_left_column(scenarios, values, colors, accomplishment):
                    y=values,
                    text=values,
                    marker_color=colors,
-                   hovertemplate="%{x} : %{y:.1%}<extra></extra>")
+                   hovertemplate="%{x} : %{y:.0%}<extra></extra>")
         ])
-        fig.update_traces(texttemplate='%{text:.1%}', textposition='outside')
+        fig.update_traces(texttemplate='%{text:.0%}', textposition='outside')
         fig.update_layout(showlegend=False,
                           paper_bgcolor='rgba(0,0,0,0)',
                           plot_bgcolor='rgba(0,0,0,0)',
@@ -337,9 +337,9 @@ def generate_bottomright_left_column(scenarios, values, colors, accomplishment):
                    y=values,
                    text=values,
                    marker_color=colors,
-                   hovertemplate="%{x} : %{y:.1%}<extra></extra>")
+                   hovertemplate="%{x} : %{y:.0%}<extra></extra>")
         ])
-        fig.update_traces(texttemplate='%{text:.1%}', textposition='outside')
+        fig.update_traces(texttemplate='%{text:.0%}', textposition='outside')
         fig.update_layout(showlegend=False,
                           paper_bgcolor='rgba(0,0,0,0)',
                           plot_bgcolor='rgba(0,0,0,0)',
