@@ -47,7 +47,7 @@ def details(selected_company):
 
     fig.update_traces(textposition='inside',
                       texttemplate='%{text:.0%}',
-                      hovertemplate='<b>Information</b>: %{hovertext}'
+                      hovertemplate='%{hovertext} : %{text:.0%}<extra></extra>'
     # + "<br><b>Emissions</b>: %{y}%<br><extra></extra>"
     )
     
