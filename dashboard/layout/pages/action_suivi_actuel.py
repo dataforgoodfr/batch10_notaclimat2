@@ -59,10 +59,6 @@ def build_bullet_gauge(engagement, accomplishment, color_accomplishment):
     fig.add_traces(traces)
     fig.update_layout(barmode='stack')
 
-    # Considering the recent accomplishment as a 3/4°C accomplishment
-    if accomplishment == 99:
-        accomplishment = 2 
-
     # Building left cursor: accomplishment
     trace1 = go.Scatter(x=[-0.1 - width],
                         y=[7 - accomplishment],
@@ -181,13 +177,14 @@ def bottom_left(selected_company):
             values.append(0)
 
     engagement = get_data(df, 'direct_score_commitments')
-    accomplishment = get_data(df, 'direct_score')
+    accomplishment_level = get_data(df, 'direct_level')
+    accomplishment_score = get_data(df, 'direct_score')
     color_accomplishment = get_data(df, 'direct_score_hexa_color_code')
     colors = [color_accomplishment, '#FEC800', '#8CDF41', '#0DB800']
     accomplishment_initial_year = get_data(df, 'c1_initial_date')
     accomplishment_final_year = get_data(df, 'c1_final_date')
 
-    return values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year
+    return values, colors, engagement, accomplishment_level, accomplishment_score, color_accomplishment, accomplishment_initial_year, accomplishment_final_year
 
 
 def get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year):
@@ -199,8 +196,8 @@ def get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year)
         return "Réduction des émissions de GES entre " + initial_year + " et " + final_year
 
 
-def generate_bottomleft_left_column(scenarios, values, colors, accomplishment):
-    if accomplishment == 1:
+def generate_bottomleft_left_column(scenarios, values, colors, accomplishment_score):
+    if accomplishment_score == 1:
         return dbc.Col(html.Div(['Pas de mesure/reporting.',
                                  html.Br(), 'Trajectoire critique >4°C.']),
                        className="d-flex align-items-center justify-content-center",
@@ -211,7 +208,7 @@ def generate_bottomleft_left_column(scenarios, values, colors, accomplishment):
                            'maxWidth': '60%',
                            'height': 'inherit'
                        })
-    elif accomplishment == 99:
+    elif accomplishment_score == 99:
         return dbc.Col(
             html.Div(['Mesure seulement récente.',
                      html.Br(),'Trajectoire business-as-usual : vers +4°C.']),
@@ -252,7 +249,7 @@ def generate_bottomleft_left_column(scenarios, values, colors, accomplishment):
 
 def generate_bottomleft_item(selected_company):
     scenarios = ['Réduction observée', 'Reco 2°C', 'Reco 1.8°C', 'Reco 1.5°C']
-    values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_left(
+    values, colors, engagement, accomplishment_level, accomplishment_score, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_left(
         selected_company)
 
     return html.Div(
@@ -260,7 +257,7 @@ def generate_bottomleft_item(selected_company):
             dbc.Row([
                 html.Div(get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year),
                          style={'text-align': 'center'}),
-                generate_bottomleft_left_column(scenarios, values, colors, accomplishment),
+                generate_bottomleft_left_column(scenarios, values, colors, accomplishment_score),
                 dbc.Col(
                     [
                         html.Div('Compatibilité climatique actuelle vs. ses engagements annoncés',
@@ -269,7 +266,7 @@ def generate_bottomleft_item(selected_company):
                                      'font-size': '0.75em',
                                      'margin': '10px'
                                  }),
-                        dcc.Graph(figure=build_bullet_gauge(engagement, accomplishment, color_accomplishment),
+                        dcc.Graph(figure=build_bullet_gauge(engagement, accomplishment_level, color_accomplishment),
                                   config={'displayModeBar': False})
                     ],
                     style={
@@ -297,13 +294,14 @@ def bottom_right(selected_company):
             values.append(0)
 
     engagement = get_data(df, 'complete_score_commitments')
-    accomplishment = get_data(df, 'complete_score')
+    accomplishment_level = get_data(df, 'complete_level')
+    accomplishment_score = get_data(df, 'complete_score')
     color_accomplishment = get_data(df, 'complete_score_hexa_color_code')
     colors = [color_accomplishment, '#FEC800', '#8CDF41', '#0DB800']
     accomplishment_initial_year = get_data(df, 'c2_initial_date')
     accomplishment_final_year = get_data(df, 'c2_final_date')
 
-    return values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year
+    return values, colors, engagement, accomplishment_level, accomplishment_score, color_accomplishment, accomplishment_initial_year, accomplishment_final_year
 
 
 def get_bottomright_title(accomplishment_initial_year, accomplishment_final_year):
@@ -315,8 +313,8 @@ def get_bottomright_title(accomplishment_initial_year, accomplishment_final_year
         return "Réduction de l'empreinte carbone entre " + initial_year + " et " + final_year
 
 
-def generate_bottomright_left_column(scenarios, values, colors, accomplishment):
-    if accomplishment == 1:
+def generate_bottomright_left_column(scenarios, values, colors, accomplishment_score):
+    if accomplishment_score == 1:
         return dbc.Col(html.Div(['Pas de mesure/reporting.',
                                  html.Br(), 'Trajectoire critique >4°C.']),
                        className="d-flex align-items-center justify-content-center",
@@ -327,7 +325,7 @@ def generate_bottomright_left_column(scenarios, values, colors, accomplishment):
                            'max-width': '60%',
                            'height': 'inherit'
                        })
-    elif accomplishment == 99:
+    elif accomplishment_score == 99:
         return dbc.Col(
             html.Div(['Mesure seulement récente.',
                      html.Br(),'Trajectoire business-as-usual : vers +4°C.']),
@@ -369,7 +367,7 @@ def generate_bottomright_left_column(scenarios, values, colors, accomplishment):
 
 def generate_bottomright_item(selected_company):
     scenarios = ['Réduction observée', 'Reco 2°C', 'Reco 1.8°C', 'Reco 1.5°C']
-    values, colors, engagement, accomplishment, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_right(
+    values, colors, engagement, accomplishment_level, accomplishment_score, color_accomplishment, accomplishment_initial_year, accomplishment_final_year = bottom_right(
         selected_company)
 
     return html.Div(
@@ -377,7 +375,7 @@ def generate_bottomright_item(selected_company):
             dbc.Row([
                 html.Div(get_bottomright_title(accomplishment_initial_year, accomplishment_final_year),
                          style={'text-align': 'center'}),
-                generate_bottomright_left_column(scenarios, values, colors, accomplishment),
+                generate_bottomright_left_column(scenarios, values, colors, accomplishment_score),
                 dbc.Col(
                     [
                         html.Div('Compatibilité climatique actuelle vs. ses engagements annoncés',
@@ -386,7 +384,7 @@ def generate_bottomright_item(selected_company):
                                      'font-size': '0.75em',
                                      'margin': '10px'
                                  }),
-                        dcc.Graph(figure=build_bullet_gauge(engagement, accomplishment, color_accomplishment),
+                        dcc.Graph(figure=build_bullet_gauge(engagement, accomplishment_level, color_accomplishment),
                                   config={'displayModeBar': False})
                     ],
                     style={
