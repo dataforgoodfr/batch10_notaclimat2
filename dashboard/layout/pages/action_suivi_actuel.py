@@ -188,12 +188,12 @@ def bottom_left(selected_company):
 
 
 def get_bottomleft_title(accomplishment_initial_year, accomplishment_final_year):
-    if pd.isna(accomplishment_initial_year) and pd.isna(accomplishment_final_year):
-        return "Réduction des émissions de GES"
+    if pd.isna(accomplishment_initial_year) or pd.isna(accomplishment_final_year):
+        return "Réduction de ses propres émissions de CO2e"
     else:
         initial_year = str(accomplishment_initial_year)
         final_year = str(accomplishment_final_year)
-        return "Réduction des émissions de GES entre " + initial_year + " et " + final_year
+        return "Réduction de ses propres émissions de CO2e entre " + initial_year + " et " + final_year
 
 
 def generate_bottomleft_left_column(scenarios, values, colors, accomplishment_score):
@@ -305,7 +305,7 @@ def bottom_right(selected_company):
 
 
 def get_bottomright_title(accomplishment_initial_year, accomplishment_final_year):
-    if pd.isna(accomplishment_initial_year) and pd.isna(accomplishment_final_year):
+    if pd.isna(accomplishment_initial_year) or pd.isna(accomplishment_final_year):
         return "Réduction de l'empreinte carbone"
     else:
         initial_year = str(accomplishment_initial_year)
