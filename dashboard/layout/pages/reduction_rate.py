@@ -85,7 +85,7 @@ def generate_chart_left(selected_companies):
     accomplishment, color_accomplishment, companies_names, df = chart_left(selected_companies)
 
     return html.Div(children=[
-        html.Div("Concernant leurs propres émissions", className="h5 p-3"),
+        html.Div("Concernant leurs propres émissions", className="h6 p-3"),
         html.Div(dcc.Graph(figure=build_lollipop_chart(accomplishment, color_accomplishment, companies_names, df),
                            style={
                                'width': '100%',
@@ -101,7 +101,7 @@ def generate_chart_right(selected_companies):
     accomplishment, color_accomplishment, companies_names, df = chart_right(selected_companies)
 
     return html.Div(children=[
-        html.Div("Concernant leur empreinte carbone complète", className="h5 p-3"),
+        html.Div("Concernant leur empreinte carbone complète", className="h6 p-3"),
         html.Div(dcc.Graph(figure=build_lollipop_chart(accomplishment, color_accomplishment, companies_names, df),
                            style={
                                'width': '100%',
@@ -115,7 +115,7 @@ def generate_chart_right(selected_companies):
 
 def reduction_rate(selected_companies):
     return html.Div(children=[
-        html.Div(" Niveaux de réduction actuels comparés aux trajectoires climatiques", className="h3 p-0"),
+        html.Div(" Niveaux de réduction actuels comparés aux trajectoires climatiques", className="h5 p-0"),
         html.Div(dbc.Row([
             dbc.Col(generate_chart_left(selected_companies), className='d-inline p-2', style={'width': '49%'}),
             dbc.Col(generate_chart_right(selected_companies), className='d-inline p-2', style={'width': '49%'}),

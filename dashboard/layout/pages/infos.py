@@ -40,13 +40,13 @@ def infos(selected_company):
                          className="col"),
             ],
                      className="row"),
-            #html.Div('Main brands:', className="h5 mt-3"), #English version
-            html.Div('Principales marques :', className="h5 mt-3"), #French version
+            #html.Div('Main brands:', className="h6 mt-3"), #English version
+            html.Div('Principales marques :', className="h6 mt-3"), #French version
             #dash_table.DataTable({'test' : dataviz_df[dataviz_df['company_name']==selected_company]['top_brands'].values[0]})
             #html.Code(tabulate(dataviz_df[dataviz_df['company_name']==selected_company]['top_brands'].values[0], tablefmt='html'))
             html.Ul(
                 [html.Li(i, className="list-group-item") for i in top_brands],
-                className="list-group p-0",
+                className="list-group px-2",
             )
         ],
         className=card_style)

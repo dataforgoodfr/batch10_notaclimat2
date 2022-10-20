@@ -59,7 +59,7 @@ def generate_html_table(df, max_rows, selected_company):
                         className="align-baseline table-secondary"))
 
     return html.Div(children=[
-        html.Div("Comparaison sectorielle - " + selected_company, className="h4 mb-3"),
+        html.Div("Comparaison sectorielle - " + selected_company, className="h5 mb-3"),
         html.Div([
             html.Table([
                 html.Thead([
