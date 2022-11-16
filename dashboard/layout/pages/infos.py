@@ -10,6 +10,7 @@ import ast
 
 def infos(selected_company):
     top_brands = ast.literal_eval(dataviz_df[dataviz_df['company_name'] == selected_company]['top_brands'].values[0])
+    top_brands = [brand for brand in top_brands if brand != 'NaN']
 
     return html.Div(
         children=[
@@ -21,8 +22,9 @@ def infos(selected_company):
                          className="col",
                          style={"maxWidth": "110px"}),
                 html.Div([
-                    html.Div(selected_company + " " +
-                             flag.flag(dataviz_df[dataviz_df['company_name'] == selected_company]['country_flag'].values[0]),
+                    html.Div(selected_company + " (" +
+                             flag.flag(dataviz_df[dataviz_df['company_name'] == selected_company]['country_flag'].values[0]) +
+                             ")",
                              className="h3"),
                     #html.Div('Sector: ' + dataviz_df[dataviz_df['company_name'] == selected_company]['sector'].values[0], #English version
                     html.Div('Secteur : ' + dataviz_df[dataviz_df['company_name'] == selected_company]['sector'].values[0], #French version
@@ -38,13 +40,13 @@ def infos(selected_company):
                          className="col"),
             ],
                      className="row"),
-            #html.Div('Main brands:', className="h5 mt-3"), #English version
-            html.Div('Principales marques :', className="h5 mt-3"), #French version
+            #html.Div('Main brands:', className="h6 mt-3"), #English version
+            html.Div('Principales marques :', className="h6 mt-3"), #French version
             #dash_table.DataTable({'test' : dataviz_df[dataviz_df['company_name']==selected_company]['top_brands'].values[0]})
             #html.Code(tabulate(dataviz_df[dataviz_df['company_name']==selected_company]['top_brands'].values[0], tablefmt='html'))
             html.Ul(
                 [html.Li(i, className="list-group-item") for i in top_brands],
-                className="list-group p-0",
+                className="list-group px-2",
             )
         ],
         className=card_style)

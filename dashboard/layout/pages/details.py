@@ -31,20 +31,23 @@ def details(selected_company):
         color_discrete_sequence= px.colors.sequential.Plotly3
         )
 
-    fig.update_layout({
-        'plot_bgcolor': 'rgba(255, 255, 255, 255)',
-        'paper_bgcolor': 'rgba(255, 255, 255, 255)',
+    fig.update_layout(
+        {
+            'plot_bgcolor': 'rgba(255, 255, 255, 255)',
+            'paper_bgcolor': 'rgba(255, 255, 255, 255)',
         },
+        legend=dict(yanchor="top", y=-0.05, xanchor="left", x=-0.25),
         legend_title="Catégories",
-        uniformtext_minsize=6,
-        )
+        uniformtext_minsize=10,
+        uniformtext_mode='hide'
+    )
 
     fig.data = fig.data[::-1]
     fig.layout.legend.traceorder = 'reversed'
 
     fig.update_traces(textposition='inside',
-                      texttemplate='%{text:.1%}',
-                      hovertemplate='<b>Information</b>: %{hovertext}'
+                      texttemplate='%{text:.0%}',
+                      hovertemplate='%{hovertext} : %{text:.0%}<extra></extra>'
     # + "<br><b>Emissions</b>: %{y}%<br><extra></extra>"
     )
     
@@ -53,7 +56,7 @@ def details(selected_company):
 
 
     return html.Div(children=[
-        html.Div("Détail des émissions", className="h5 p-3"),
+        html.Div("Détails de son empreinte carbone", className="h5 p-3"),
         html.Div([  
             dcc.Graph(id="details",
                       figure=fig,
